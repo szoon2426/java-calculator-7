@@ -15,6 +15,9 @@ public class Application {
         // 변수 선언
         String stnc;        // 입력값
         int answer = 0;
+        boolean hasCustomed = false;
+        char customId = ',';      // 커스텀 구분자
+
 
         // 문자열 입력받기
         System.out.println("덧셈할 문자열을 입력해 주세요.");
@@ -23,8 +26,16 @@ public class Application {
         int odr = 0;
         int tmp = 1;
 
-        for(int i = 0; i<stnc.length(); i++){
-            if(stnc.charAt(i) == ',' || stnc.charAt(i) == ':'){     // , 이나 : 나오면 그 전까지를 answer에 더함
+        if(stnc.substring(0,2).equals("//") && stnc.substring(3,5).equals("\\n")){
+            customId = stnc.charAt(2);
+            hasCustomed = true;
+        }
+
+        int i = 0; boolean condition= stnc.charAt(i) == ',' || stnc.charAt(i) == ':';       // 오류가 나는데 왜 나는지 모르겠어요,,,,
+        if(hasCustomed){i=5; condition = condition || stnc.charAt(i) == customId;}
+
+        for(; i<stnc.length(); i++){
+            if(condition){     // , 이나 : 나오면 그 전까지를 answer에 더함
                 for(int j = i-1; j>=odr; j--){
                     answer += (stnc.charAt(j)-48) * tmp;
                     tmp *= 10;
