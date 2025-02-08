@@ -34,17 +34,20 @@ public class Application {
         int tmp = 1;
 
         for(; i<stnc.length(); i++){
-            boolean condition= stnc.charAt(i) == ',' || stnc.charAt(i) == ':';
-            if(hasCustomed){condition = condition || stnc.charAt(i) == customId;}
+            char num = stnc.charAt(i);
+            boolean condition= num == ',' || num == ':';
+            if(hasCustomed){condition = condition || num == customId;}
 
             if(i==stnc.length()-1){           // 마지막에는 구분자 이후의 숫자를 더함
                 for(int j = i; j>=odr; j--){
-                    answer += (stnc.charAt(j)-48) * tmp;
+                    if(48 > num || num>57){throw new IllegalArgumentException();}
+                    answer += (num-48) * tmp;
                     tmp *= 10;
                 }
             }else if(condition){     // , 이나 : 나오면 그 전까지를 answer에 더함
                 for(int j = i-1; j>=odr; j--){
-                    answer += (stnc.charAt(j)-48) * tmp;
+                    if(48 > num || num>57){throw new IllegalArgumentException();}
+                    answer += (num-48) * tmp;
                     tmp *= 10;
                 }
                 tmp = 1;
