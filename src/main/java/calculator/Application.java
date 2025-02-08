@@ -23,30 +23,32 @@ public class Application {
         System.out.println("덧셈할 문자열을 입력해 주세요.");
         stnc = Console.readLine();
 
-        int odr = 0;
-        int tmp = 1;
+        int i=0;
 
         if(stnc.substring(0,2).equals("//") && stnc.substring(3,5).equals("\\n")){
             customId = stnc.charAt(2);
             hasCustomed = true;
+            i=5;
         }
-
-        int i = 0; boolean condition= stnc.charAt(i) == ',' || stnc.charAt(i) == ':';       // 오류가 나는데 왜 나는지 모르겠어요,,,,
-        if(hasCustomed){i=5; condition = condition || stnc.charAt(i) == customId;}
+        int odr = i;
+        int tmp = 1;
 
         for(; i<stnc.length(); i++){
-            if(condition){     // , 이나 : 나오면 그 전까지를 answer에 더함
+            boolean condition= stnc.charAt(i) == ',' || stnc.charAt(i) == ':';
+            if(hasCustomed){condition = condition || stnc.charAt(i) == customId;}
+
+            if(i==stnc.length()-1){           // 마지막에는 구분자 이후의 숫자를 더함
+                for(int j = i; j>=odr; j--){
+                    answer += (stnc.charAt(j)-48) * tmp;
+                    tmp *= 10;
+                }
+            }else if(condition){     // , 이나 : 나오면 그 전까지를 answer에 더함
                 for(int j = i-1; j>=odr; j--){
                     answer += (stnc.charAt(j)-48) * tmp;
                     tmp *= 10;
                 }
                 tmp = 1;
                 odr = i+1;
-            }else if(i==stnc.length()-1){           // 마지막에는 구분자 이후의 숫자를 더함
-                for(int j = i; j>=odr; j--){
-                    answer += (stnc.charAt(j)-48) * tmp;
-                    tmp *= 10;
-                }
             }
         }
 
